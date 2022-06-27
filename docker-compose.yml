@@ -1,0 +1,58 @@
+version: "3.7"
+services:
+
+  web-server1:
+    image: nginxdemos/hello
+    ports:
+      - 3080:80
+      - 3443:443
+
+  web-server2:
+    image: nginxdemos/hello
+    ports:
+      - 4080:80
+      - 4443:443
+
+  rp-nginx:
+    restart: always
+    links:
+      - web-server1
+      - web-server2
+    build:
+      context: ./
+      dockerfile: ./Dockerfile_nginx
+    volumes:
+      - ./nginx.conf:/usr/local/nginx/nginx/conf/nginx.conf
+    ports:
+      - 80:80
+      - 443:443
+
+#  prometheus:
+#    restart: always
+#    volumes:
+#      - prometheus-dir:/prometheus
+#      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+#    links:
+#      - rp-nginx
+#    ports:
+#      - 9090:9090
+#    image: prom/prometheus
+#    depends_on:
+#      - rp-nginx
+#
+#  grafana:
+#    restart: always
+#    volumes:
+#      - grafana-storage:/var/lib/grafana
+#    links:
+#      - rp-nginx
+#      - prometheus
+#    ports:
+#      - 3000:3000
+#    image: grafana/grafana
+#    depends_on:
+#      - prometheus
+
+volumes:
+  prometheus-dir:
+  grafana-storage:
