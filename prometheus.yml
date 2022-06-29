@@ -9,6 +9,7 @@ scrape_configs:
 
   - job_name: 'vts'
     scrape_interval: 5s
+    metrics_path: /status/format/prometheus
     static_configs:
-      - targets: ['rp-nginx:80/status/format/prometheus']
+      - targets: ['rp-nginx:80']
 
