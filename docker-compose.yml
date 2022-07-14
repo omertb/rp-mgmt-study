@@ -20,7 +20,7 @@ services:
       - web-server2
     build:
       context: ./
-      dockerfile: ./Dockerfile_nginx
+      dockerfile: ./Dockerfile
     volumes:
       - ./nginx.conf:/usr/local/nginx/nginx/conf/nginx.conf
     ports:
